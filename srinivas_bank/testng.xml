@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="basic suite" parallel = 'none'>
+    <test name="basic test" preserve-order="true">
+        <classes>
+            <class name="hybrid.srinivas_bank.BasicExecution">
+                <methods>
+                    <exclude name="createNewBranchTest"></exclude>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
