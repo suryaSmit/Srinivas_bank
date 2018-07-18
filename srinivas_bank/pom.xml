@@ -64,7 +64,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>parameters</id>
 			<build>
@@ -82,7 +82,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>browser-compatibility</id>
 			<build>
@@ -100,7 +100,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>parallel</id>
 			<build>
@@ -120,6 +120,25 @@
 				</plugins>
 			</build>
 		</profile>
+		
+		<profile>
+			<id>dataDriven</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.22.0</version>
+						<configuration>
+							<suiteXmlFiles>
+								<suiteXmlFile>dataDriven.xml</suiteXmlFile>
+							</suiteXmlFiles>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
 	</profiles>
 
 
@@ -131,14 +150,14 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>6.14.3</version>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>3.11.0</version>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
 		<dependency>
@@ -150,6 +169,13 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
+			<version>3.17</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
 			<version>3.17</version>
 		</dependency>
 

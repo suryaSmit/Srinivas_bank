@@ -11,7 +11,7 @@ import resources.TestListener;
 @Listeners(TestListener.class)
 public class TestExecution extends Repository{
 	
-	@AfterMethod(groups= {"branch", "search", "clear", "create" , "reset", "duplicate", "emptydata", "role", "employee"})
+	@AfterMethod(groups= {"branch", "search", "clear", "create" , "reset", "duplicate", "emptydata", "role", "employee", "data_driven"})
 	public void closeUnexpectedAlert(ITestResult result) {
 		if( result.getStatus() == ITestResult.FAILURE) {
 			try {
@@ -23,7 +23,7 @@ public class TestExecution extends Repository{
   	}
 
 	
-	@Test(priority = 0, groups= {"branch", "search", "clear", "create" , "reset", "duplicate", "emptydata" ,"role"})
+	@Test(priority = 0, groups= {"branch", "search", "clear", "create" , "reset", "duplicate", "emptydata" ,"role", "data_driven"})
 	public void loginTest() {
 		bankHomePage.fillUsername("Admin");
 		bankHomePage.fillPassword("Admin");
@@ -142,7 +142,37 @@ public class TestExecution extends Repository{
 		newEmployeePage.clickCancel();
 	}
 	
-	@Test(priority = 14, groups= {"branch", "search", "clear", "create" , "reset", "duplicate", "emptydata", "role", "employee"})
+	@Test(priority = 14, groups = {"branch","data_driven"}, dataProviderClass = DataProviders.class, dataProvider = "branch_data")
+	public void testBranchCreationWithMulipleData(String branchName, String address1, String zipcode, String country, String state, String city) {
+		adminHomePage.clickBranchesButton();
+		branchesPage.clickNewBranchButton();
+		fillBranchCreationForm(branchName, address1, zipcode, country, state, city);
+		branchCreationPage.clickSubmitButton();
+		System.out.println(getAlertText());
+		acceptAlert();
+	}
+	
+	@Test(priority = 15, groups = {"role", "data_driven"}, dataProviderClass=DataProviders.class, dataProvider = "role_data")
+	public void testRoleCreationWithMultipleData(String roleName, String roleType) {
+		adminHomePage.clickRolesButton();
+		rolePage.clickNewRole();
+		fillRoleCreationForm(roleName, roleType);
+		newRolePage.clickSubmit();
+		System.out.println(getAlertText());
+		acceptAlert();
+	}
+	
+	@Test(priority = 16, groups = {"employee","data_driven"}, dataProviderClass = DataProviders.class, dataProvider ="employee_data")
+	public void testEmployeeCreationWithMultipleData(String empName, String password, String role, String branchName) {
+		adminHomePage.clickEmployeeButton();
+		employeePage.clickNewEmployee();
+		fillEmployeeCreationForm(empName, password, role, branchName);
+		newEmployeePage.clickSubmit();
+		System.out.println(getAlertText());
+		acceptAlert();
+	}
+	
+	@Test(priority = 18, groups= {"branch", "search", "clear", "create" , "reset", "duplicate", "emptydata", "role", "employee", "data_driven"})
 	public void logoutTest() {
 		adminHomePage.clickLogoutButton();
 	}
