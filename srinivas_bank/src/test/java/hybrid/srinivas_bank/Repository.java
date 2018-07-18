@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.internal.EventFiringTouch;
+import org.testng.Reporter;
 import org.testng.annotations.AfterSuite;
 
 import com.relevantcodes.extentreports.ExtentReports;
@@ -36,6 +37,7 @@ public class Repository {
 	public void launchBrowser(String browser, String url) {
 		if (browser.equalsIgnoreCase("chrome")) {
 			String path = Repository.class.getClassLoader().getResource("resources/chromedriver").getPath();
+			Reporter.log(path,true);
 			System.setProperty("webdriver.chrome.driver", path);
 			wdriver = new ChromeDriver();
 			
