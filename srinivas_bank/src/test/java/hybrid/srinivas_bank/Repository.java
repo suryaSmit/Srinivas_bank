@@ -47,8 +47,8 @@ public class Repository {
 				wdriver = new FirefoxDriver();
 			}
 		} else if (System.getProperty("os.name").startsWith("Windows")) {
-			if (browser.equalsIgnoreCase("chrome")) {
-				String path = Repository.class.getClassLoader().getResource("resources/chromedriver.exe").getPath();
+			if (browser.equalsIgnoreCase("firefox")) {
+				String path = Repository.class.getClassLoader().getResource("resources/geckodiriver.exe").getPath();
 				System.setProperty("webdriver.chrome.driver", path);
 				wdriver = new ChromeDriver();
 
