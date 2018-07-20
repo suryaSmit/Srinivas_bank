@@ -32,19 +32,27 @@ public class Repository {
 	EmployeePage employeePage;
 	NewEmployeePage newEmployeePage;
 	protected static ExtentReports report;
-	protected static  ExtentTest test;
+	protected static ExtentTest test;
 
 	public void launchBrowser(String browser, String url) {
-		if (browser.equalsIgnoreCase("chrome")) {
-			String path = Repository.class.getClassLoader().getResource("resources/chromedriver").getPath();
-			Reporter.log(path,true);
-			System.setProperty("webdriver.chrome.driver", path);
-			wdriver = new ChromeDriver();
-			
-		}else if(browser.equalsIgnoreCase("firefox")) {
-			String path = Repository.class.getClassLoader().getResource("resources/geckodriver").getPath();
-			System.setProperty("webdriver.gecko.driver", path);
-			wdriver = new FirefoxDriver();
+		if (System.getProperty("os.name").startsWith("Mac")) {
+			if (browser.equalsIgnoreCase("chrome")) {
+				String path = Repository.class.getClassLoader().getResource("resources/chromedriver").getPath();
+				System.setProperty("webdriver.chrome.driver", path);
+				wdriver = new ChromeDriver();
+
+			} else if (browser.equalsIgnoreCase("firefox")) {
+				String path = Repository.class.getClassLoader().getResource("resources/geckodriver").getPath();
+				System.setProperty("webdriver.gecko.driver", path);
+				wdriver = new FirefoxDriver();
+			}
+		} else if (System.getProperty("os.name").startsWith("Windows")) {
+			if (browser.equalsIgnoreCase("chrome")) {
+				String path = Repository.class.getClassLoader().getResource("resources/chromedriver.exe").getPath();
+				System.setProperty("webdriver.chrome.driver", path);
+				wdriver = new ChromeDriver();
+
+			}
 		}
 		driver = new EventFiringWebDriver(wdriver);
 		Listener listener = new Listener();
@@ -60,15 +68,15 @@ public class Repository {
 	public String getDate() {
 		Date date = new Date();
 		DateFormat df = new SimpleDateFormat("dd-MM-YY hh-mm-ss");
-		return df.format(date);		
+		return df.format(date);
 	}
-	
+
 	public String getPath(String fileName) {
 		StringBuilder path = new StringBuilder(
 				System.getProperty("user.dir") + File.separator + "report" + File.separator + fileName);
 		return path.toString();
 	}
-	
+
 	public void initialize() {
 		bankHomePage = new BankHomePage(driver);
 		adminHomePage = new AdminHomePage(driver);
@@ -133,7 +141,5 @@ public class Repository {
 		newEmployeePage.selectRole(role);
 		newEmployeePage.selectBranch(branch);
 	}
-	
-	
 
 }
