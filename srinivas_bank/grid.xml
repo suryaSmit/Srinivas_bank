@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Grid suite" parallel = 'tests' thread-count="2">
+    <parameter name="url" value="http://srssprojects.in"></parameter>
+    
+    <test name="windows test" preserve-order="true">
+        <parameter name="browser" value="chrome"></parameter>
+       <parameter name="nodeURL" value="http://192.168.1.7:5555/wd/hub"></parameter>
+        <groups>
+            <run>
+                <include name="role"></include>
+            </run>
+        </groups>
+        <classes>
+            <class name="hybrid.srinivas_bank.GridExecution">
+            </class>
+        </classes>
+    </test>
+    
+    <test name="mac test" preserve-order="true">
+        <parameter name="browser" value="chrome"></parameter>
+        <parameter name="nodeURL" value="http://192.168.1.2:5555/wd/hub"></parameter>
+        <groups>
+            <run>
+                <include name="role"></include>
+            </run>
+        </groups>
+        <classes>
+            <class name="hybrid.srinivas_bank.ParameterExecution">
+            </class>
+        </classes>
+    </test>
+    
+</suite>

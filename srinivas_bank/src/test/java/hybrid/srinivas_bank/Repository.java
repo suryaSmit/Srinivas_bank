@@ -3,13 +3,19 @@ package hybrid.srinivas_bank;
 import java.awt.Event;
 import java.awt.List;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.internal.EventFiringTouch;
 import org.testng.Reporter;
@@ -33,6 +39,30 @@ public class Repository {
 	NewEmployeePage newEmployeePage;
 	protected static ExtentReports report;
 	protected static ExtentTest test;
+
+	public void launchBrowser(String browser, String url, String nodeURL) {
+		DesiredCapabilities caps = new DesiredCapabilities();
+		if (browser.equals("chrome")) {
+			caps.setBrowserName(BrowserType.CHROME);
+			caps.setPlatform(Platform.MAC);
+		}
+		if (browser.equals("firefox")) {
+			caps.setBrowserName(BrowserType.FIREFOX);
+			caps.setPlatform(Platform.WINDOWS);
+		}
+		try {
+			wdriver = new RemoteWebDriver(new URL(nodeURL), caps);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver = new EventFiringWebDriver(wdriver);
+		Listener listener = new Listener();
+		driver.register(listener);
+		driver.get(url);
+		driver.manage().window().maximize();
+
+	}
 
 	public void launchBrowser(String browser, String url) {
 		if (System.getProperty("os.name").startsWith("Mac")) {
